@@ -22,24 +22,14 @@ const createToDo = (title, form, list) => {
     return todoContainer;
 };
 
-const createListTodo = () => {
-    const listTodo = document.createElement('ul');
-
-    listTodo.classList.add('list-group');
-
-    return listTodo;
-};
-
-
-
 const createFormTodo = () => {
     const form = document.createElement('form');
     const input = document.createElement('input');
     const textArea = document.createElement('textarea');
     const btnSubmit = document.createElement('button');
 
-    input.placeholder = 'Наименование'; //input.setAttribute('placeholder', '1234');
-    textArea.placeholder = 'Описание';
+    input.placeholder = 'Наименование'; //input.setAttribute('placeholder', 'наименование');
+    textArea.placeholder = 'Описание';  //textArea.setAttribute('placeholder', 'описание');
     
     btnSubmit.textContent = 'Добавить';
     btnSubmit.type = 'submit';
@@ -53,6 +43,37 @@ const createFormTodo = () => {
     return { input, textArea, btnSubmit, form };
 };
 
+const createListTodo = () => {
+    const listTodo = document.createElement('ul');
+    listTodo.classList.add('list-group');
+    return listTodo;
+};
+
+const createItemTodo = (titleItem) => {
+    const itemTodo = document.createElement('li');
+    const btnItem = document.createElement('button');
+
+    itemTodo.classList.add('list-group-item', 'p-0', 'mb-3', 'border-0');
+    btnItem.classList.add('btn', 'btn-light', 'btn-lg', 'btn-block', 'border-primary', 'rounded-pill');
+    btnItem.textContent = titleItem;
+    itemTodo.append(btnItem);
+
+    return itemTodo;
+};
+
+// const addTodo = event => {
+//     event.preventDefault();
+//     /**** */console.log('addotodo');
+
+//     if (formTodo.input.value.trim && formTodo.textArea.value) {
+//         const itemTodo = createItemTodo(formTodo.input.value);
+//         listTodo.append(itemTodo);
+//         formTodo.form.reset();
+//         console.log('Создаем итем');
+//     } else {
+//         console.log('Нужно дозаполнить форму');
+//     }
+// };
 
 const initTodo = (selector, titleTodo) => {
     const wrapper = document.querySelector(selector);
@@ -62,7 +83,44 @@ const initTodo = (selector, titleTodo) => {
     const todoApp = createToDo(titleTodo, formTodo.form, listTodo);
 
     wrapper.append(todoApp);
-}
+
+    /*** */
+    // const addTodo = event => {
+    //     event.preventDefault();
+    //     /**** */console.log('addotodo');
+    //     if (formTodo.input.value.trim() && formTodo.textArea.value) {
+    //         const itemTodo = createItemTodo(formTodo.input.value);
+    //         listTodo.append(itemTodo);
+    //         formTodo.form.reset();
+    //         console.log('Создаем итем');
+    //     } else {
+    //         console.log('Нужно дозаполнить форму');
+    //     }
+    // };
+
+    
+    formTodo.form.addEventListener('submit', event => {
+        event.preventDefault();
+        formTodo.input.classList.remove('is-invalid');
+        formTodo.textArea.classList.remove('is-invalid');
+        
+        if (formTodo.input.value.trim() && formTodo.textArea.value) {
+            const itemTodo = createItemTodo(formTodo.input.value);
+            listTodo.append(itemTodo);
+            formTodo.form.reset();
+            console.log('Создаем итем');
+        } else {
+            if (!formTodo.input.value) {
+                formTodo.input.classList.add('is-invalid');
+            }
+            if (!formTodo.textArea.value) {
+                formTodo.textArea.classList.add('is-invalid');
+            }
+            console.log('Нужно дозаполнить форму');
+        }
+    });
+
+};
 
 
 
