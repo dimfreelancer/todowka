@@ -61,21 +61,20 @@ const createItemTodo = (titleItem) => {
     return itemTodo;
 };
 
-// const addTodo = event => {
-//     event.preventDefault();
-//     /**** */console.log('addotodo');
+const addTodoItem = (todoData, listTodo, nameTodo, descriptionTodo) => {
+    const itemTodo = createItemTodo(nameTodo);
 
-//     if (formTodo.input.value.trim && formTodo.textArea.value) {
-//         const itemTodo = createItemTodo(formTodo.input.value);
-//         listTodo.append(itemTodo);
-//         formTodo.form.reset();
-//         console.log('Создаем итем');
-//     } else {
-//         console.log('Нужно дозаполнить форму');
-//     }
-// };
+    todoData.push({ nameTodo, descriptionTodo });
+    
+    listTodo.append(itemTodo);
+    console.log('todoData: ', todoData);
+};
+
+
 
 const initTodo = (selector, titleTodo) => {
+    const todoData = [];
+
     const wrapper = document.querySelector(selector);
     const formTodo = createFormTodo();
     const listTodo = createListTodo();
@@ -83,30 +82,17 @@ const initTodo = (selector, titleTodo) => {
     const todoApp = createToDo(titleTodo, formTodo.form, listTodo);
 
     wrapper.append(todoApp);
-
-    /*** */
-    // const addTodo = event => {
-    //     event.preventDefault();
-    //     /**** */console.log('addotodo');
-    //     if (formTodo.input.value.trim() && formTodo.textArea.value) {
-    //         const itemTodo = createItemTodo(formTodo.input.value);
-    //         listTodo.append(itemTodo);
-    //         formTodo.form.reset();
-    //         console.log('Создаем итем');
-    //     } else {
-    //         console.log('Нужно дозаполнить форму');
-    //     }
-    // };
-
     
     formTodo.form.addEventListener('submit', event => {
         event.preventDefault();
+
         formTodo.input.classList.remove('is-invalid');
         formTodo.textArea.classList.remove('is-invalid');
         
         if (formTodo.input.value.trim() && formTodo.textArea.value) {
-            const itemTodo = createItemTodo(formTodo.input.value);
-            listTodo.append(itemTodo);
+            // const itemTodo = createItemTodo(formTodo.input.value);
+            // listTodo.append(itemTodo);
+            addTodoItem(todoData, listTodo, formTodo.input.value, formTodo.textArea.value);
             formTodo.form.reset();
             console.log('Создаем итем');
         } else {
@@ -118,9 +104,9 @@ const initTodo = (selector, titleTodo) => {
             }
             console.log('Нужно дозаполнить форму');
         }
-    });
+    })
 
-};
+}
 
 
 
