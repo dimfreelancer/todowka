@@ -49,22 +49,25 @@ const createListTodo = () => {
     return listTodo;
 };
 
-const createItemTodo = (titleItem) => {
+const createItemTodo = (id, titleItem) => {
     const itemTodo = document.createElement('li');
     const btnItem = document.createElement('button');
 
     itemTodo.classList.add('list-group-item', 'p-0', 'mb-3', 'border-0');
     btnItem.classList.add('btn', 'btn-light', 'btn-lg', 'btn-block', 'border-primary', 'rounded-pill');
     btnItem.textContent = titleItem;
+    btnItem.id = id;
     itemTodo.append(btnItem);
 
     return itemTodo;
 };
 
 const addTodoItem = (todoData, listTodo, nameTodo, descriptionTodo) => {
-    const itemTodo = createItemTodo(nameTodo);
+    const id = `todo${(+new Date()).toString(16)}`;//создаем псевно временно уникальный id дела, в строку hex
+    const itemTodo = createItemTodo(id, nameTodo);
+    // console.log('id: ', id);
 
-    todoData.push({ nameTodo, descriptionTodo });
+    todoData.push({ id, nameTodo, descriptionTodo });
     
     listTodo.append(itemTodo);
     console.log('todoData: ', todoData);
